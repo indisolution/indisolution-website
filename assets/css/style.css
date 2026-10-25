@@ -374,6 +374,43 @@ a.shot-body:hover img { opacity: .92; }
 .product-art li { display: flex; gap: 10px; align-items: center; padding: 9px 0; font-size: .97rem; }
 .product-art li svg { width: 20px; height: 20px; color: var(--ok); flex-shrink: 0; }
 
+/* Home banner: layered product screens */
+.hero-collage { position: relative; width: 100%; aspect-ratio: 1 / .96; }
+.hc {
+  position: absolute; display: block; border-radius: 12px; overflow: hidden; background: #fff;
+  box-shadow: 0 18px 44px rgba(3, 12, 28, .45); border: 1px solid rgba(255,255,255,.18);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.hc img { display: block; width: 100%; height: auto; }
+.hc span {
+  position: absolute; left: 10px; bottom: 10px; background: rgba(11, 36, 71, .88); color: #fff;
+  font-size: .76rem; font-weight: 650; padding: 5px 10px; border-radius: 999px; letter-spacing: .01em;
+}
+.hc:hover, .hc:focus-visible { z-index: 10; transform: translateY(-6px) rotate(0deg) scale(1.02); box-shadow: 0 26px 60px rgba(3, 12, 28, .55); }
+.hc-1 { top: 0; right: 0; width: 64%; transform: rotate(2deg); z-index: 1; }
+.hc-1 span, .hc-3 span { left: auto; right: 10px; }
+.hc-2 { top: 9%; left: 0; width: 58%; transform: rotate(-2deg); z-index: 2; }
+.hc-3 { top: 50%; right: 0; width: 62%; transform: rotate(1.5deg); z-index: 3; }
+.hc-4 { top: 59%; left: 2%; width: 47%; transform: rotate(-1.5deg); z-index: 4; }
+@media (max-width: 900px) { .hero-collage { max-width: 520px; } }
+@media (max-width: 560px) {
+  .hc span { font-size: .64rem; padding: 3px 8px; left: 6px; bottom: 6px; }
+  .hc-1 span, .hc-3 span { left: auto; right: 6px; }
+}
+
+/* Solution cards: the product's screen faded into the background */
+.card.has-shot { overflow: hidden; isolation: isolate; }
+.card.has-shot::before {
+  content: ""; position: absolute; z-index: -1; right: -6%; bottom: -5%; width: 86%; aspect-ratio: 16 / 10;
+  background: var(--shot) left top / cover no-repeat; border-radius: 10px; opacity: .3;
+  box-shadow: 0 6px 24px rgba(11, 36, 71, .25); transform: rotate(-2deg);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.55) 30%, #000 70%);
+          mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.55) 30%, #000 70%);
+  transition: opacity .25s ease, transform .25s ease;
+}
+.card.has-shot:hover::before { opacity: .45; transform: rotate(-1deg) translateY(-4px); }
+.card.has-shot .card-actions .btn-outline { background: rgba(255,255,255,.92); }
+
 /* WhatsApp floating button */
 .wa-float {
   position: fixed; right: 18px; bottom: 18px; z-index: 40; width: 54px; height: 54px; border-radius: 50%;
