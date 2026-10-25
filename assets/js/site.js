@@ -62,6 +62,28 @@
     }
   }
 
+  // ---- Screenshot lightbox (links still open the image if this fails) ----
+  var shotLinks = document.querySelectorAll("a[data-lightbox]");
+  if (shotLinks.length && window.HTMLDialogElement) {
+    var box = document.createElement("dialog");
+    box.className = "lightbox";
+    box.innerHTML = '<button type="button" aria-label="Close">&times;</button><img alt=""><p></p>';
+    document.body.appendChild(box);
+    var boxImg = box.querySelector("img"), boxCap = box.querySelector("p");
+    box.querySelector("button").addEventListener("click", function () { box.close(); });
+    box.addEventListener("click", function (e) { if (e.target === box || e.target === boxImg) box.close(); });
+    shotLinks.forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        var fig = a.closest("figure");
+        boxImg.src = a.href;
+        boxImg.alt = a.querySelector("img").alt;
+        boxCap.textContent = fig && fig.querySelector("figcaption") ? fig.querySelector("figcaption").textContent : "";
+        box.showModal();
+      });
+    });
+  }
+
   // ---- Forms ----
   document.querySelectorAll("form[data-indi-form]").forEach(function (form) {
     form.addEventListener("submit", function (ev) {
